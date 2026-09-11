@@ -1,4 +1,4 @@
-# 🌍 Multi-Agent LangGraph AI Trip Planner
+# 🌍 Agentic LangGraph AI Trip Planner
 
 A state-of-the-art **Agentic Travel Assistant** that compiles, plans, and budgets highly personalized itineraries. Powered by a **LangGraph-orchestrated workflow**, this application leverages specialized agent nodes to dynamically fetch real-time search, places, weather, and currency data to deliver complete travel blueprints.
 
