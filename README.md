@@ -1,4 +1,153 @@
-# 🌍 Agentic LangGraph AI Trip Planner
+<!-- AI Trip Planner — Agentic Travel Assistant · README -->
+<div align="center">
+
+<img width="100%" alt="AI Trip Planner header" src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,45:1D4ED8,75:2563EB,100:06B6D4&height=230&section=header&text=AI%20Trip%20Planner&fontSize=54&fontColor=FFFFFF&fontAlignY=40&desc=Agentic%20Travel%20Assistant%20%E2%80%A2%20LangGraph%20%E2%80%A2%20Live%20Tools%20%E2%80%A2%20Budget-Aware%20Itineraries&descAlignY=68&descSize=17&animation=fadeIn"/>
+
+<br/>
+
+<img alt="Python" src="https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img alt="Agents" src="https://img.shields.io/badge/Agents-LangGraph-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white"/>
+<img alt="LLM" src="https://img.shields.io/badge/LLM-Groq%20%2F%20OpenAI-F55036?style=for-the-badge"/>
+<img alt="Backend" src="https://img.shields.io/badge/Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
+<img alt="UI" src="https://img.shields.io/badge/UI-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white"/>
+
+<br/><br/>
+
+<a href="#-overview"><b>Overview</b></a> •
+<a href="#-architecture"><b>Architecture</b></a> •
+<a href="#-engineering-highlights"><b>Highlights</b></a> •
+<a href="#-quick-start"><b>Quick Start</b></a> •
+<a href="#-recruiter-snapshot"><b>Recruiter Snapshot</b></a> •
+<a href="#-contact"><b>Contact</b></a>
+
+</div>
+
+---
+
+# 🧭 Overview
+
+An **agentic travel assistant** that turns a request like *"Plan a 4-day budget-friendly food & sightseeing trip to Tokyo"* into a **complete, costed, day-by-day itinerary**. A **LangGraph** agent decides which tools to call — places, live web search, weather, currency conversion and expense calculation — and composes the results into a readable travel plan.
+
+---
+
+# 🏗️ Architecture
+
+<details open>
+<summary><b>🧠 How the agent plans a trip (click to collapse)</b></summary>
+
+<br/>
+
+```mermaid
+flowchart LR
+  U["🧑 Traveller<br/>Streamlit chat"] --> API["⚡ FastAPI<br/>POST /query"]
+  API --> G["🧠 LangGraph agent<br/>(Groq deepseek-r1-distill-llama-70b<br/>or OpenAI)"]
+  G <--> T1["📍 Place search<br/>Google Places · Foursquare"]
+  G <--> T2["🌐 Web search<br/>Tavily"]
+  G <--> T3["🌦️ Weather<br/>OpenWeatherMap"]
+  G <--> T4["💱 Currency<br/>ExchangeRate-API"]
+  G <--> T5["🧮 Expense &amp; arithmetic tools"]
+  G --> O["🗺️ Day-by-day itinerary<br/>+ budget · exported to document"]
+```
+
+The compiled graph is rendered automatically to `my_graph.png` on startup.
+
+</details>
+
+
+---
+
+# ⚙️ Engineering Highlights
+
+<details open>
+<summary><b>🏁 Design choices (click to collapse)</b></summary>
+
+<br/>
+
+<table>
+<tr>
+<td width="25%" valign="top">
+
+### 🔁 Tool-Calling Loop
+Agent iterates between reasoning and tool calls until the plan is complete — not a single prompt.
+
+</td>
+<td width="25%" valign="top">
+
+### 🧩 Modular Tools
+Each integration lives in `tools/` with logic in `utils/`, so APIs can be swapped without touching the graph.
+
+</td>
+<td width="25%" valign="top">
+
+### 🔀 Provider-Agnostic
+`ModelLoader` switches between Groq and OpenAI via `config.yaml`.
+
+</td>
+<td width="25%" valign="top">
+
+### 🏭 Production Layout
+Custom logger & exception handling, `setup.py`/`pyproject` packaging, decoupled API + UI.
+
+</td>
+</tr>
+</table>
+
+</details>
+
+
+---
+
+# 🚀 Quick Start
+
+```bash
+pip install -r requirements.txt
+cp .env.name .env          # add GROQ / GPLACES / TAVILAY keys
+uvicorn main:app --port 8000 --reload      # terminal 1
+streamlit run streamlit_app.py             # terminal 2 → http://localhost:8501
+```
+
+---
+
+# 🎯 Recruiter Snapshot
+
+<details open>
+<summary><b>📌 What to remember in 15 seconds (click to collapse)</b></summary>
+
+<br/>
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### ✅ Demonstrated
+- Agentic workflows with LangGraph
+- Multi-API tool integration
+- LLM provider abstraction
+- Client–server GenAI app
+
+</td>
+<td width="50%" valign="top">
+
+### 🧠 Why it matters
+- Real data, not hallucinated plans
+- Cost-aware outputs
+- Clean, extensible codebase
+
+</td>
+</tr>
+</table>
+
+</details>
+
+
+---
+
+# 📚 Full Technical Documentation
+
+<details>
+<summary><b>🛠️ Setup, configuration, API reference and implementation details (click to expand)</b></summary>
+
+<br/>
 
 A state-of-the-art **Agentic Travel Assistant** that compiles, plans, and budgets highly personalized itineraries. Powered by a **LangGraph-orchestrated workflow**, this application leverages specialized agent nodes to dynamically fetch real-time search, places, weather, and currency data to deliver complete travel blueprints.
 
@@ -111,3 +260,23 @@ streamlit run streamlit_app.py
     - The **Weather & Currency Tools** adjust schedules based on weather and perform precise exchange conversions.
 4. **Itinerary Compilation**: The final travel agent compiles the retrieved context into a highly readable travel roadmap and returns it to your Streamlit screen.
 5. **Autogenerated Logic Graph**: Check `my_graph.png` in the project root to inspect the exact compiled logic model of your Travel Graph!
+
+</details>
+
+
+---
+
+# 📬 Contact
+
+<div align="center">
+
+**Krishan Kumar** — AI Engineer & Data Scientist · Rome, Italy
+
+<a href="https://www.linkedin.com/in/krishan-kumar-ml/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+<a href="mailto:krishbijarniya@gmail.com"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
+<a href="https://krishan-kumar-portfolio.vercel.app/"><img src="https://img.shields.io/badge/Portfolio-0F172A?style=for-the-badge&logo=vercel&logoColor=white" alt="Portfolio"/></a>
+<a href="https://github.com/krishanbijarniya"><img src="https://img.shields.io/badge/More%20projects-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+
+</div>
+
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:06B6D4,50:1D4ED8,100:0F172A&height=120&section=footer" alt=""/>
